@@ -1,180 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hotel Golden Manor — Menus & Directory</title>
-<meta name="description" content="Access the Hotel Golden Manor restaurant menu, bar menu and guest directory instantly." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   EDIT HERE — put your PDF file names / links below
-   Place the PDFs next to this HTML file, or paste full URLs.
-   ============================================================ */
-:root{
-  --pdf-hint:"restaurant-menu.pdf, bar-menu.pdf, directory.pdf";
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Golden Manor Documents</title>
 
-  /* Colours */
-  --cream:#fdf3dd;
-  --paper:#ffffff;
-  --ink:#1b1b1b;
-  --gold:#c8a04a;
-  --gold-soft:#e2c67e;
-  --muted-text:#9a8558;
+  <!--
+  ═══════════════════════════════════════════════════════════════════
+  HOTEL GOLDEN MANOR — QUICK SETUP GUIDE
+  ═══════════════════════════════════════════════════════════════════
 
-  /* Card background photos (swap with your own) */
-  --img-restaurant:url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=70");
-  --img-bar:url("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=70");
-}
+  1. PDF LINKS
+     Search for "PDF LINKS" below and update the three href values.
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:"Inter",system-ui,sans-serif;
-  background:var(--cream);
-  color:var(--ink);
-  display:flex;
-  justify-content:center;
-  padding:0;
-}
-.sheet{
-  width:100%;
-  max-width:600px;
-  background:var(--cream);
-  min-height:100%;
-}
-.panel{
-  background:var(--paper);
-  padding:0 26px 26px;
-  margin-top:64px;
-}
+  2. COVER PHOTOS
+     Drop your images into the assets/ folder, then update the two
+     --restaurant-cover and --bar-cover variables in the :root block.
 
-/* Logo */
-.logo{
-  width:96px;height:150px;margin:0 auto;
-  transform:translateY(-58px);
-  background:var(--paper);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:-46px;
-}
-.logo img,.logo svg{width:78px;height:107px;object-fit:contain;display:block}
+     Recommended size: 800 × 500 px (JPG or PNG).
 
-/* Header */
-h1{
-  font-family:"Playfair Display",Georgia,serif;
-  font-size:clamp(30px,7.5vw,44px);
-  font-weight:900;
-  text-align:center;
-  letter-spacing:-.5px;
-  margin-bottom:18px;
-}
-.contact{text-align:center;color:var(--muted-text);font-size:14px;line-height:1.9;font-weight:600}
-.contact a{color:inherit;text-decoration:none}
-.tagline{
-  text-align:center;color:var(--gold);font-weight:700;font-size:14px;
-  margin:10px 0 22px;
-}
+  3. LOGO (optional)
+     Replace assets/logo.png or keep the built-in SVG logo.
 
-/* Cards */
-.card{
-  position:relative;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  border-radius:14px;border:2px solid #2a2118;
-  overflow:hidden;text-decoration:none;
-  box-shadow:0 6px 18px rgba(0,0,0,.14);
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-.card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.22)}
-.card::before{
-  content:"";position:absolute;inset:0;
-  background-size:cover;background-position:center;
-  background-image:var(--bg);
-}
-.card::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42)}
-.card > *{position:relative;z-index:1}
-.card svg{width:44px;height:44px;margin-bottom:8px}
-.card span{
-  font-family:"Playfair Display",Georgia,serif;
-  font-size:34px;font-weight:900;color:var(--gold-soft);
-  text-align:center;line-height:1.1;
-  text-shadow:0 2px 6px rgba(0,0,0,.5);
-}
+  4. CONTACT DETAILS
+     Search for "CONTACT INFO" in the HTML body section.
+  ═══════════════════════════════════════════════════════════════════
+  -->
 
-.card-wide{--bg:var(--img-restaurant);height:190px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card-bar{--bg:var(--img-bar);height:200px}
-.card-bar span{font-size:30px}
+  <style>
+    :root {
+      /* ── COLORS ── */
+      --page-bg: #fff4d8;
+      --panel-bg: #ffffff;
+      --gold: #9b813b;
+      --deep-brown: #2a1f18;
+      --shadow: 0 18px 28px rgba(56, 42, 28, 0.16);
+      --tile-shadow: 0 8px 18px rgba(56, 42, 28, 0.14);
 
-.card-plain{
-  height:200px;background:var(--paper);
-}
-.card-plain::before,.card-plain::after{display:none}
-.card-plain span{color:var(--ink);font-size:30px;text-shadow:none}
-.card-plain svg{color:var(--gold)}
+      /* ── COVER PHOTOS — change these paths to your own images ── */
+      --restaurant-cover: url("assets/restaurant-cover.jpg");
+      --bar-cover: url("assets/bar-cover.jpg");
 
-.scan{text-align:center;color:var(--gold);font-weight:700;font-size:14px;margin-top:22px}
+      /* ── TILE HEIGHTS (mobile first) ── */
+      --restaurant-height: 150px;
+      --menu-tile-height: 155px;
+    }
 
-.address{
-  text-align:center;font-weight:700;font-size:15px;line-height:1.6;
-  padding:26px 34px;color:var(--ink);
-}
-.footer-bar{height:34px;background:var(--cream)}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
-@media (max-width:400px){
-  .grid{grid-template-columns:1fr}
-  .card-plain,.card-bar{height:160px}
-}
-</style>
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--page-bg);
+      font-family: Arial, Helvetica, sans-serif;
+      color: #000;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── PAGE SHELL ── */
+    .poster {
+      width: 100%;
+      max-width: 600px;
+      min-height: 100vh;
+      background: var(--page-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-card {
+      width: calc(100% - 32px);
+      max-width: 546px;
+      margin: 48px auto 0;
+      background: var(--panel-bg);
+      text-align: center;
+      padding: 48px 20px 32px;
+      box-shadow: var(--shadow);
+      border-radius: 4px;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      width: 72px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(28px, 7vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .contact {
+      margin: 0;
+      color: var(--gold);
+      font-size: clamp(13px, 3.4vw, 16px);
+      line-height: 1.65;
+    }
+
+    .contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact a:hover,
+    .contact a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .contact-note {
+      display: block;
+      margin-top: 6px;
+    }
+
+    /* ── DOCUMENT GRID (mobile first: stack, then 2-col) ── */
+    .document-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .document-grid a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .restaurant-tile,
+    .bar-tile,
+    .directory-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 0;
+      width: 100%;
+      border-radius: 8px;
+      text-decoration: none;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--tile-shadow);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .restaurant-tile:hover,
+    .bar-tile:hover,
+    .directory-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(56, 42, 28, 0.2);
+    }
+
+    .restaurant-tile:focus-visible,
+    .bar-tile:focus-visible,
+    .directory-tile:focus-visible {
+      outline: 4px solid rgba(155, 129, 59, 0.45);
+      outline-offset: 4px;
+    }
+
+    /* Cover-photo tiles */
+    .restaurant-tile,
+    .bar-tile {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .restaurant-tile {
+      background-color: #2a2218;
+      background-image: var(--restaurant-cover);
+      min-height: var(--restaurant-height);
+    }
+
+    .bar-tile {
+      background-color: #1a2830;
+      background-image: var(--bar-cover);
+      min-height: var(--menu-tile-height);
+    }
+
+    .tile__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(20, 14, 10, 0.15) 0%,
+        rgba(20, 14, 10, 0.55) 100%
+      );
+      pointer-events: none;
+    }
+
+    .tile__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tile__icon {
+      width: 44px;
+      height: 44px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .tile__label {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 5.5vw, 30px);
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+      color: var(--gold);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+      text-decoration: none;
+    }
+
+    /* Directory tile */
+    .directory-tile {
+      background: var(--panel-bg);
+      border: 3px solid var(--deep-brown);
+      color: var(--deep-brown);
+      min-height: var(--menu-tile-height);
+    }
+
+    .directory-tile .tile__icon {
+      color: var(--gold);
+    }
+
+    .directory-tile .tile__label {
+      color: var(--deep-brown);
+      text-shadow: none;
+    }
+
+    .update-note {
+      margin: 22px 0 0;
+      color: var(--gold);
+      font-size: clamp(13px, 3.4vw, 16px);
+    }
+
+    /* ── ADDRESS ── */
+    .address-band {
+      width: calc(100% - 32px);
+      max-width: 546px;
+      margin: 28px auto 32px;
+      padding: 0 16px;
+      text-align: center;
+      color: var(--gold);
+      font-size: clamp(12px, 3.2vw, 15px);
+      line-height: 1.55;
+    }
+
+    /* ── TABLET / LARGER PHONES: bar + directory side by side ── */
+    @media (min-width: 400px) {
+      :root {
+        --restaurant-height: 170px;
+        --menu-tile-height: 165px;
+      }
+
+      .main-card {
+        margin-top: 64px;
+        padding: 64px 28px 36px;
+      }
+
+      .document-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .restaurant-tile {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ── DESKTOP POSTER SIZE ── */
+    @media (min-width: 640px) {
+      :root {
+        --restaurant-height: 188px;
+        --menu-tile-height: 199px;
+      }
+
+      .main-card {
+        margin-top: 80px;
+        padding: 72px 36px 40px;
+      }
+
+      .logo {
+        width: 88px;
+      }
+
+      .document-grid {
+        gap: 22px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="sheet">
-  <div class="panel">
-    <div class="logo">
-      <!-- LOGO SPACE: drop your file here, e.g. -->
-      <!-- <img src="logo.png" alt="Hotel Golden Manor logo"> -->
-    </div>
+  <main class="poster" aria-label="Hotel Golden Manor document access">
+    <section class="main-card">
+      <!-- LOGO: swap src with your own PNG/SVG if needed -->
+      <img
+        class="logo"
+        src="assets/logo.png"
+        alt="Hotel Golden Manor logo"
+        width="88"
+        height="88"
+        onerror="this.replaceWith(document.getElementById('logo-fallback').content.cloneNode(true))"
+      />
 
-    <h1>Hotel Golden Manor</h1>
-
-    <p class="contact">
-      <a href="tel:+919828330987">+91 98283 30987</a> | <a href="tel:+919950553069">+91 99505 53069</a><br>
-      <a href="mailto:resveration@goldenmanorjaipur.com">resveration@goldenmanorjaipur.com</a>
-    </p>
-    <p class="tagline">Access our documents instantly</p>
-
-    <!-- ===== PDF LINK 1 ===== -->
-    <a class="restaurant-tile" href="restaurant-menu.pdf" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#e2c67e" stroke-width="2" stroke-linecap="round">
-        <path d="M4 3v7a3 3 0 0 0 6 0V3M7 10v11"/><path d="M17 3c-2 2-2 6-2 8h4V3z"/><path d="M17 11v10"/>
-      </svg>
-      <span>Restaurant Menu</span>
-    </a>
-
-    <div class="grid">
-      <!-- ===== PDF LINK 2 ===== -->
-      <a class="bar-tile" href="bar-menu.pdf" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#e2c67e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 4h18l-9 9z"/><path d="M12 13v7"/><path d="M8 21h8"/>
+      <template id="logo-fallback">
+        <svg class="logo" viewBox="0 0 100 100" fill="none" aria-label="Hotel Golden Manor logo" role="img">
+          <path d="M50 6  L68 30  L62 30  L50 14  L38 30  L32 30  Z" fill="#111"/>
+          <path d="M50 22 L72 52  L66 52  L50 34  L34 52  L28 52  Z" fill="#111"/>
+          <path d="M50 40 L76 76  L70 76  L50 54  L30 76  L24 76  Z" fill="#111"/>
+          <path d="M50 58 L80 98  L74 98  L50 72  L26 98  L20 98  Z" fill="#111"/>
         </svg>
-        <span>Bar<br>Menu</span>
-      </a>
+      </template>
 
-      <!-- ===== PDF LINK 3 ===== -->
-      <a class="directory-tile" href="directory.pdf" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3z"/><path d="M21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/>
-        </svg>
-        <span>Directory</span>
-      </a>
-    </div>
+      <h1>Hotel Golden Manor</h1>
 
-    <p class="scan">Scan anytime for the latest updates</p>
-  </div>
+      <!-- CONTACT INFO — edit phone numbers and email below -->
+      <p class="contact">
+        <a href="tel:+919828330987">+91 98283 30987</a>
+        &nbsp;|&nbsp;
+        <a href="tel:+919950553069">+91 99505 53069</a><br />
+        <a href="mailto:reservation@goldenmanorjaipur.com">reservation@goldenmanorjaipur.com</a>
+        <span class="contact-note">Access our documents instantly</span>
+      </p>
 
-  <p class="address">B-22/B-1,2 Shiv Marg, Collectorate Circle, Banipark, Jaipur-302016</p>
-  <div class="footer-bar"></div>
-</div>
+      <div class="document-grid" aria-label="Hotel documents">
+
+        <!-- PDF LINKS — Restaurant Menu -->
+        <a
+          class="restaurant-tile"
+          href="Restaurant Menu_compressed.pdf"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open Restaurant Menu PDF"
+        >
+          <span class="tile__overlay" aria-hidden="true"></span>
+          <span class="tile__content">
+            <svg class="tile__icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M22 10v22c0 4 2 6 6 6s6-2 6-6V10" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M28 10v8M25 14h6" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M42 10v44" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M42 10c6 0 8 4 8 10v8c0 4-2 6-6 6" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+            <span class="tile__label">Restaurant Menu</span>
+          </span>
+        </a>
+
+        <!-- PDF LINKS — Bar Menu -->
+        <a
+          class="bar-tile" 
+          href="Bar Menu.pdf"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open Bar Menu PDF"
+        >
+          <span class="tile__overlay" aria-hidden="true"></span>
+          <span class="tile__content">
+            <svg class="tile__icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M24 12h16l-3 24H27L24 12Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+              <path d="M32 36v16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M24 52h16" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="42" cy="18" r="5" stroke="currentColor" stroke-width="3"/>
+              <path d="M42 23v6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="tile__label">Bar Menu</span>
+          </span>
+        </a>
+
+        <!-- PDF LINKS — Directory -->
+        <a
+          class="directory-tile"
+          href="Directory.pdf"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open Directory PDF"
+        >
+          <span class="tile__content">
+            <svg class="tile__icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M12 13c8.5 0 14.5 2.1 20 7.1C37.5 15.1 43.5 13 52 13v35c-8.5 0-14.5 2.1-20 7.1C26.5 50.1 20.5 48 12 48V13Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M32 20v35" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <span class="tile__label">Directory</span>
+          </span>
+        </a>
+      </div>
+
+      <p class="update-note">Scan anytime for the latest updates</p>
+    </section>
+
+    <footer class="address-band">
+      B-22/B-1,2 Shiv Marg, Collectorate Circle, Banipark, Jaipur-302016
+    </footer>
+  </main>
 </body>
 </html>
